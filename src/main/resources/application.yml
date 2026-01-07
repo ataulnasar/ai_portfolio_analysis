@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: portfolio-commentary
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+  info:
+    env:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    com.yourcompany: DEBUG
