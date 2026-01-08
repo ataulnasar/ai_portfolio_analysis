@@ -1,0 +1,4 @@
+as_of_date,instrument_name,quantity,price,currency,ticker,isin,sector,region
+2025-03-31,Qlucore,21100,1.00,SEK,,,Technology,Europe
+2025-03-31,Sinch,120,29.00,SEK,,,Technology,Europe
+2025-03-31,Viaplay Group B,2500,0.71,SEK,VIAP B,SE0021313683,Media,Europe
