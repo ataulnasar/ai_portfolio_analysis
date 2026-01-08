@@ -13,7 +13,7 @@ public class InMemorySnapshotRepository implements SnapshotRepository {
 
     @Override
     public PortfolioSnapshot save(PortfolioSnapshot snapshot) {
-        store.put(snapshot.getId(), snapshot);
+        store.put(snapshot.id(), snapshot);
         return snapshot;
     }
 

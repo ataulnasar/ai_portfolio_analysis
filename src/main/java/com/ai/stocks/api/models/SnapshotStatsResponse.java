@@ -1,4 +1,4 @@
-package com.ai.stocks.api.dto;
+package com.ai.stocks.api.models;
 
 import java.math.BigDecimal;
 

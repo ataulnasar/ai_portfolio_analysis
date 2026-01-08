@@ -1,4 +1,4 @@
-package com.ai.stocks.api.dto;
+package com.ai.stocks.api.models;
 
 import com.ai.stocks.domain.PortfolioSource;
 import jakarta.validation.Valid;

@@ -56,10 +56,10 @@ public class SnapshotCalculator {
 
         List<TopHolding> topHoldings = topHoldingsFrom(values, total);
 
-        BigDecimal top1 = topHoldings.isEmpty() ? pct(0) : topHoldings.getFirst().getWeightPercent();
+        BigDecimal top1 = topHoldings.isEmpty() ? pct(0) : topHoldings.getFirst().weightPercent();
         BigDecimal top3 = topHoldings.stream()
                 .limit(3)
-                .map(TopHolding::getWeightPercent)
+                .map(TopHolding::weightPercent)
                 .reduce(pct(0), BigDecimal::add);
         top3 = pct(top3);
 
@@ -84,7 +84,7 @@ public class SnapshotCalculator {
 
         return sorted.stream()
                 .map(hv -> new TopHolding(
-                        hv.holding().getInstrumentName(),
+                        hv.holding().instrumentName(),
                         percent(hv.marketValue(), total)
                 ))
                 .toList();
@@ -96,9 +96,9 @@ public class SnapshotCalculator {
 
         for (HoldingValue hv : values) {
             String group = switch (key) {
-                case SECTOR -> normalize(hv.holding().getSector());
-                case REGION -> normalize(hv.holding().getRegion());
-                case CURRENCY -> normalize(hv.holding().getCurrency());
+                case SECTOR -> normalize(hv.holding().sector());
+                case REGION -> normalize(hv.holding().region());
+                case CURRENCY -> normalize(hv.holding().currency());
             };
 
             sums.merge(group, hv.marketValue(), BigDecimal::add);

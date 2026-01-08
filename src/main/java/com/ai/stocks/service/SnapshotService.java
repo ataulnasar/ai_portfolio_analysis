@@ -1,13 +1,12 @@
 package com.ai.stocks.service;
 
-import com.ai.stocks.api.dto.HoldingCreateRequest;
-import com.ai.stocks.api.dto.SnapshotCreateRequest;
+import com.ai.stocks.api.models.HoldingCreateRequest;
+import com.ai.stocks.api.models.SnapshotCreateRequest;
 import com.ai.stocks.domain.*;
 
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class SnapshotService {

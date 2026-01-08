@@ -4,18 +4,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-public final class EquityHolding {
-    private final String instrumentName;
-    private final String ticker;   // optional
-    private final String isin;     // optional
-
-    private final BigDecimal quantity;
-    private final BigDecimal price;
-    private final String currency;
-
-    private final String sector;  // optional
-    private final String region;  // optional
-
+/**
+ * @param ticker optional
+ * @param isin   optional
+ * @param sector optional
+ * @param region optional
+ */
+public record EquityHolding(String instrumentName, String ticker, String isin, BigDecimal quantity, BigDecimal price,
+                            String currency, String sector, String region) {
     public EquityHolding(
             String instrumentName,
             String ticker,
@@ -38,16 +34,9 @@ public final class EquityHolding {
         this.region = blankToNull(region);
     }
 
-    public String getInstrumentName() { return instrumentName; }
-    public String getTicker() { return ticker; }
-    public String getIsin() { return isin; }
-    public BigDecimal getQuantity() { return quantity; }
-    public BigDecimal getPrice() { return price; }
-    public String getCurrency() { return currency; }
-    public String getSector() { return sector; }
-    public String getRegion() { return region; }
-
-    /** Derived: market value = quantity * price */
+    /**
+     * Derived: market value = quantity * price
+     */
     public BigDecimal getMarketValue() {
         return quantity.multiply(price).setScale(2, RoundingMode.HALF_UP);
     }

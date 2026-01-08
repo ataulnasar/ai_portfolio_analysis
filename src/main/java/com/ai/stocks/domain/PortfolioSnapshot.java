@@ -7,22 +7,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public final class PortfolioSnapshot {
-
-    private final UUID id;
-    private final LocalDate asOfDate;
-    private final String baseCurrency;
-    private final PortfolioSource source;
-
-    private final List<EquityHolding> holdings;
-
-    // Derived fields (stored for reproducibility)
-    private final BigDecimal totalMarketValue;
-    private final List<TopHolding> topHoldings; // name + weight
-    private final Map<String, BigDecimal> sectorExposure;   // sector -> %
-    private final Map<String, BigDecimal> regionExposure;   // region -> %
-    private final Map<String, BigDecimal> currencyExposure; // currency -> %
-    private final SnapshotStats stats;
+/**
+ * @param totalMarketValue Derived fields (stored for reproducibility)
+ * @param topHoldings      name + weight
+ * @param sectorExposure   sector -> %
+ * @param regionExposure   region -> %
+ * @param currencyExposure currency -> %
+ */
+public record PortfolioSnapshot(UUID id, LocalDate asOfDate, String baseCurrency, PortfolioSource source,
+                                List<EquityHolding> holdings, BigDecimal totalMarketValue, List<TopHolding> topHoldings,
+                                Map<String, BigDecimal> sectorExposure, Map<String, BigDecimal> regionExposure,
+                                Map<String, BigDecimal> currencyExposure, SnapshotStats stats) {
 
     public PortfolioSnapshot(
             UUID id,
@@ -51,19 +46,6 @@ public final class PortfolioSnapshot {
         this.currencyExposure = Map.copyOf(Objects.requireNonNull(currencyExposure, "currencyExposure"));
         this.stats = Objects.requireNonNull(stats, "stats");
     }
-
-    public UUID getId() { return id; }
-    public LocalDate getAsOfDate() { return asOfDate; }
-    public String getBaseCurrency() { return baseCurrency; }
-    public PortfolioSource getSource() { return source; }
-    public List<EquityHolding> getHoldings() { return holdings; }
-
-    public BigDecimal getTotalMarketValue() { return totalMarketValue; }
-    public List<TopHolding> getTopHoldings() { return topHoldings; }
-    public Map<String, BigDecimal> getSectorExposure() { return sectorExposure; }
-    public Map<String, BigDecimal> getRegionExposure() { return regionExposure; }
-    public Map<String, BigDecimal> getCurrencyExposure() { return currencyExposure; }
-    public SnapshotStats getStats() { return stats; }
 
     private static String requireNonBlank(String value, String field) {
         if (value == null || value.trim().isEmpty()) {

@@ -36,14 +36,14 @@ class SnapshotCalculatorTest {
 
         assertEquals(new BigDecimal("24580.00"), result.totalMarketValue());
         assertEquals(2, result.topHoldings().size());
-        assertEquals("Qlucore", result.topHoldings().getFirst().getInstrumentName());
+        assertEquals("Qlucore", result.topHoldings().getFirst().instrumentName());
 
         // Qlucore weight ≈ 21100/24580 * 100 = 85.84%
-        assertEquals(new BigDecimal("85.84"), result.topHoldings().getFirst().getWeightPercent());
+        assertEquals(new BigDecimal("85.84"), result.topHoldings().getFirst().weightPercent());
 
-        assertEquals(2, result.stats().getNumberOfHoldings());
-        assertEquals(new BigDecimal("85.84"), result.stats().getTopHoldingWeightPercent());
-        assertEquals(new BigDecimal("100.00"), result.stats().getTop3ConcentrationPercent());
+        assertEquals(2, result.stats().numberOfHoldings());
+        assertEquals(new BigDecimal("85.84"), result.stats().topHoldingWeightPercent());
+        assertEquals(new BigDecimal("100.00"), result.stats().top3ConcentrationPercent());
     }
 
     @Test
@@ -91,7 +91,7 @@ class SnapshotCalculatorTest {
         var result = calc.calculate(List.of(zero));
 
         assertEquals(new BigDecimal("0.00"), result.totalMarketValue());
-        assertEquals(new BigDecimal("0.00"), result.stats().getTopHoldingWeightPercent());
-        assertEquals(new BigDecimal("0.00"), result.stats().getTop3ConcentrationPercent());
+        assertEquals(new BigDecimal("0.00"), result.stats().topHoldingWeightPercent());
+        assertEquals(new BigDecimal("0.00"), result.stats().top3ConcentrationPercent());
     }
 }

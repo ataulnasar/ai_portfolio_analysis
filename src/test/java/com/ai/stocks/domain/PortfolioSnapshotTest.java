@@ -52,8 +52,8 @@ class PortfolioSnapshotTest {
                 stats
         );
 
-        assertNotNull(snapshot.getId());
-        assertEquals(2, snapshot.getHoldings().size());
-        assertEquals(new BigDecimal("21100.00"), snapshot.getHoldings().getFirst().getMarketValue());
+        assertNotNull(snapshot.id());
+        assertEquals(2, snapshot.holdings().size());
+        assertEquals(new BigDecimal("21100.00"), snapshot.holdings().getFirst().getMarketValue());
     }
 }
