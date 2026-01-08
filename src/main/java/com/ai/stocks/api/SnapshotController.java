@@ -39,43 +39,43 @@ public class SnapshotController {
         return ResponseEntity.ok(items);
     }
 
-    private SnapshotResponse toResponse(PortfolioSnapshot s) {
-        List<HoldingResponse> holdings = s.holdings().stream()
-                .map(h -> new HoldingResponse(
-                        h.instrumentName(),
-                        h.ticker(),
-                        h.isin(),
-                        h.quantity(),
-                        h.price(),
-                        h.currency(),
-                        h.sector(),
-                        h.region(),
-                        h.getMarketValue()
+    private SnapshotResponse toResponse(PortfolioSnapshot portfolioSnapshot) {
+        List<HoldingResponse> holdingResponseList = portfolioSnapshot.holdings().stream()
+                .map(equityHolding -> new HoldingResponse(
+                        equityHolding.instrumentName(),
+                        equityHolding.ticker(),
+                        equityHolding.isin(),
+                        equityHolding.quantity(),
+                        equityHolding.price(),
+                        equityHolding.currency(),
+                        equityHolding.sector(),
+                        equityHolding.region(),
+                        equityHolding.getMarketValue()
                 ))
                 .toList();
 
-        List<TopHoldingResponse> topHoldings = s.topHoldings().stream()
+        List<TopHoldingResponse> topHoldingResponses = portfolioSnapshot.topHoldings().stream()
                 .map(t -> new TopHoldingResponse(t.instrumentName(), t.weightPercent()))
                 .toList();
 
-        SnapshotStatsResponse stats = new SnapshotStatsResponse(
-                s.stats().numberOfHoldings(),
-                s.stats().topHoldingWeightPercent(),
-                s.stats().top3ConcentrationPercent()
+        SnapshotStatsResponse snapshotStatsResponse = new SnapshotStatsResponse(
+                portfolioSnapshot.stats().numberOfHoldings(),
+                portfolioSnapshot.stats().topHoldingWeightPercent(),
+                portfolioSnapshot.stats().top3ConcentrationPercent()
         );
 
         return new SnapshotResponse(
-                s.id(),
-                s.asOfDate(),
-                s.baseCurrency(),
-                s.source(),
-                s.totalMarketValue(),
-                stats,
-                topHoldings,
-                s.sectorExposure(),
-                s.regionExposure(),
-                s.currencyExposure(),
-                holdings
+                portfolioSnapshot.id(),
+                portfolioSnapshot.asOfDate(),
+                portfolioSnapshot.baseCurrency(),
+                portfolioSnapshot.source(),
+                portfolioSnapshot.totalMarketValue(),
+                snapshotStatsResponse,
+                topHoldingResponses,
+                portfolioSnapshot.sectorExposure(),
+                portfolioSnapshot.regionExposure(),
+                portfolioSnapshot.currencyExposure(),
+                holdingResponseList
         );
     }
 }
