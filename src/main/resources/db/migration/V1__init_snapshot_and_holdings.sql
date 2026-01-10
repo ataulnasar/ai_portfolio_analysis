@@ -12,10 +12,10 @@ CREATE TABLE portfolio_snapshot (
                                     top_holding_weight_pct numeric(7,2) NOT NULL,
                                     top3_concentration_pct numeric(7,2) NOT NULL,
 
-                                    top_holdings_json jsonb NOT NULL,
-                                    sector_exposure_json jsonb NOT NULL,
-                                    region_exposure_json jsonb NOT NULL,
-                                    currency_exposure_json jsonb NOT NULL,
+                                    top_holdings_json text NOT NULL,
+                                    sector_exposure_json text NOT NULL,
+                                    region_exposure_json text NOT NULL,
+                                    currency_exposure_json text NOT NULL,
 
                                     created_at timestamptz NOT NULL
 );

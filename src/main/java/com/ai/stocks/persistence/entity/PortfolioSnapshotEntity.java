@@ -40,16 +40,16 @@ public class PortfolioSnapshotEntity {
     private BigDecimal top3ConcentrationPercent;
 
     // JSONB columns for reproducibility / easy evolution
-    @Column(name = "top_holdings_json", columnDefinition = "jsonb", nullable = false)
+    @Column(name = "top_holdings_json", nullable = false)
     private String topHoldingsJson; // list of {instrumentName, weightPercent}
 
-    @Column(name = "sector_exposure_json", columnDefinition = "jsonb", nullable = false)
+    @Column(name = "sector_exposure_json", nullable = false)
     private String sectorExposureJson; // map {sector: percent}
 
-    @Column(name = "region_exposure_json", columnDefinition = "jsonb", nullable = false)
+    @Column(name = "region_exposure_json", nullable = false)
     private String regionExposureJson;
 
-    @Column(name = "currency_exposure_json", columnDefinition = "jsonb", nullable = false)
+    @Column(name = "currency_exposure_json", nullable = false)
     private String currencyExposureJson;
 
     @Column(name = "created_at", nullable = false)

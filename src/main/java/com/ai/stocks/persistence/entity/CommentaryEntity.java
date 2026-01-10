@@ -28,7 +28,7 @@ public class CommentaryEntity {
     @Column(name = "prompt_version", nullable = false, length = 64)
     private String promptVersion;
 
-    @Column(name = "sections_json", columnDefinition = "jsonb", nullable = false)
+    @Column(name = "sections_json", nullable = false)
     private String sectionsJson; // JSON of CommentarySections
 
     @Column(name = "created_at", nullable = false)

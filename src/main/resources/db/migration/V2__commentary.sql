@@ -4,7 +4,7 @@ CREATE TABLE commentary (
 
                             model varchar(64) NOT NULL,
                             prompt_version varchar(64) NOT NULL,
-                            sections_json jsonb NOT NULL,
+                            sections_json text NOT NULL,
                             created_at timestamptz NOT NULL
 );
 
