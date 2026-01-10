@@ -6,7 +6,9 @@ import com.ai.stocks.service.SnapshotService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.ai.stocks.api.models.CommentaryResponse;
+import com.ai.stocks.service.CommentaryService;
+import java.util.UUID;
 import java.util.*;
 
 @RestController
@@ -14,9 +16,11 @@ import java.util.*;
 public class SnapshotController {
 
     private final SnapshotService snapshotService;
+    private final CommentaryService commentaryService;
 
-    public SnapshotController(SnapshotService snapshotService) {
+    public SnapshotController(SnapshotService snapshotService, CommentaryService commentaryService) {
         this.snapshotService = snapshotService;
+        this.commentaryService = commentaryService;
     }
 
     @PostMapping
@@ -37,6 +41,14 @@ public class SnapshotController {
                 .map(this::toResponse)
                 .toList();
         return ResponseEntity.ok(items);
+    }
+
+    @GetMapping("/{snapshotId}/commentary")
+    public ResponseEntity<CommentaryResponse> getCommentary(
+            @PathVariable UUID snapshotId,
+            @RequestParam(required = false) String promptVersion
+    ) {
+        return ResponseEntity.ok(commentaryService.getForSnapshot(snapshotId, Optional.ofNullable(promptVersion)));
     }
 
     private SnapshotResponse toResponse(PortfolioSnapshot portfolioSnapshot) {
