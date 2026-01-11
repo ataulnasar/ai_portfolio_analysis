@@ -22,3 +22,8 @@ logging:
     root: INFO
     org.springframework: INFO
     com.yourcompany: DEBUG
+
+openai:
+  apiKey: ${OPENAI_API_KEY}
+  model: gpt-4.1-mini
+  baseUrl: https://api.openai.com/v1
