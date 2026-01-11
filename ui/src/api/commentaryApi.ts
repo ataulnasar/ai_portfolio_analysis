@@ -1,28 +1,33 @@
 import type { Commentary } from "../types/Commentary";
+import { http } from "./http";
 
-export async function getCommentaryForSnapshot(snapshotId: string): Promise<Commentary> {
-  const res = await fetch(`/snapshots/${snapshotId}/commentary`, { method: "GET" });
-
-  if (res.status === 404) {
-    throw new Error("NOT_FOUND");
+export async function getCommentaryForSnapshot(
+  snapshotId: string
+): Promise<Commentary> {
+  try {
+    return await http<Commentary>(`/snapshots/${snapshotId}/commentary`, {
+      method: "GET",
+    });
+  } catch (err: any) {
+    // Keep your existing semantic for 404
+    const msg = String(err?.message ?? err);
+    if (msg.startsWith("HTTP 404")) {
+      throw new Error("NOT_FOUND");
+    }
+    throw new Error(`Failed to load commentary: ${msg}`);
   }
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Failed to load commentary: HTTP ${res.status} ${res.statusText}: ${text}`);
-  }
-  return (await res.json()) as Commentary;
 }
 
-export async function generateCommentary(snapshotId: string): Promise<Commentary> {
-  const res = await fetch(`/commentary`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ snapshotId }),
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Failed to generate commentary: HTTP ${res.status} ${res.statusText}: ${text}`);
+export async function generateCommentary(
+  snapshotId: string
+): Promise<Commentary> {
+  try {
+    return await http<Commentary>("/commentary", {
+      method: "POST",
+      body: JSON.stringify({ snapshotId }),
+    });
+  } catch (err: any) {
+    const msg = String(err?.message ?? err);
+    throw new Error(`Failed to generate commentary: ${msg}`);
   }
-  return (await res.json()) as Commentary;
 }
