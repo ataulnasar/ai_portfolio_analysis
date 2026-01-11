@@ -1,59 +1,60 @@
-import type { Holding, Snapshot } from "../types/Snapshot";
-import { formatMoney } from "../utils/format";
+import type { Snapshot } from "../types/Snapshot";
 
-function Cell({ children }: { children: React.ReactNode }) {
-  return <td style={{ padding: "10px 8px", borderBottom: "1px solid #eee" }}>{children}</td>;
-}
+type Props = {
+  snapshot: Snapshot;
+};
 
-function HeaderCell({ children }: { children: React.ReactNode }) {
-  return (
-    <th
-      style={{
-        textAlign: "left",
-        padding: "10px 8px",
-        borderBottom: "1px solid #ddd",
-        fontSize: 12,
-        color: "#556",
-      }}
-    >
-      {children}
-    </th>
-  );
-}
+const numberFmt = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
 
-export default function HoldingsTable({ snapshot }: { snapshot: Snapshot }) {
+const currencyFmt = (currency: string) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+    minimumFractionDigits: 2,
+  });
+
+export default function HoldingsTable({ snapshot }: Props) {
   const holdings = snapshot.holdings ?? [];
 
   if (holdings.length === 0) {
-    return <p>No holdings found in this snapshot.</p>;
+    return <p className="muted">No holdings in this snapshot.</p>;
   }
 
   return (
-    <div style={{ overflowX: "auto", border: "1px solid #eee", borderRadius: 10 }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", background: "white" }}>
+    <div className="tableWrap">
+      <table>
         <thead>
           <tr>
-            <HeaderCell>Instrument</HeaderCell>
-            <HeaderCell>Ticker</HeaderCell>
-            <HeaderCell>ISIN</HeaderCell>
-            <HeaderCell>Qty</HeaderCell>
-            <HeaderCell>Price</HeaderCell>
-            <HeaderCell>Market value</HeaderCell>
-            <HeaderCell>Sector</HeaderCell>
-            <HeaderCell>Region</HeaderCell>
+            <th>Instrument</th>
+            <th>Ticker</th>
+            <th>ISIN</th>
+            <th style={{ textAlign: "right" }}>Qty</th>
+            <th style={{ textAlign: "right" }}>Price</th>
+            <th style={{ textAlign: "right" }}>Market value</th>
+            <th>Sector</th>
+            <th>Region</th>
           </tr>
         </thead>
         <tbody>
-          {holdings.map((h: Holding) => (
-            <tr key={`${h.instrumentName}-${h.isin ?? ""}-${h.ticker ?? ""}`}>
-              <Cell><strong>{h.instrumentName}</strong></Cell>
-              <Cell>{h.ticker ?? "-"}</Cell>
-              <Cell>{h.isin ?? "-"}</Cell>
-              <Cell>{h.quantity}</Cell>
-              <Cell>{formatMoney(h.price, h.currency)}</Cell>
-              <Cell>{formatMoney(h.marketValue, h.currency)}</Cell>
-              <Cell>{h.sector ?? "-"}</Cell>
-              <Cell>{h.region ?? "-"}</Cell>
+          {holdings.map((h, i) => (
+            <tr key={i}>
+              <td style={{ fontWeight: 600 }}>{h.instrumentName}</td>
+              <td>{h.ticker || "–"}</td>
+              <td>{h.isin || "–"}</td>
+              <td style={{ textAlign: "right" }}>
+                {numberFmt.format(h.quantity)}
+              </td>
+              <td style={{ textAlign: "right" }}>
+                {currencyFmt(h.currency).format(h.price)}
+              </td>
+              <td style={{ textAlign: "right", fontWeight: 600 }}>
+                {currencyFmt(snapshot.baseCurrency).format(h.marketValue)}
+              </td>
+              <td>{h.sector || "–"}</td>
+              <td>{h.region || "–"}</td>
             </tr>
           ))}
         </tbody>

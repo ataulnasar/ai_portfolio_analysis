@@ -53,14 +53,15 @@ export default function UploadForm({ onImported }: Props) {
         </select>
       </label>
 
-      <button type="submit" disabled={loading} style={{ padding: "10px 12px" }}>
+      <button className="btn" type="submit" disabled={loading}>
         {loading ? "Importing..." : "Import CSV"}
       </button>
 
       {error && (
-        <pre style={{ color: "crimson", whiteSpace: "pre-wrap", margin: 0 }}>
-          {error}
-        </pre>
+        <div className="errorBox">
+          <strong>Error</strong>
+          <pre style={{ whiteSpace: "pre-wrap", margin: "8px 0 0 0" }}>{error}</pre>
+        </div>
       )}
     </form>
   );

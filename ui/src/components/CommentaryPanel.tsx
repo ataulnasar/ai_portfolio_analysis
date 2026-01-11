@@ -89,8 +89,8 @@ export default function CommentaryPanel({ snapshotId }: Props) {
       {!loading && missing && (
         <div style={{ border: "1px solid #eee", background: "white", padding: 12, borderRadius: 10 }}>
           <p style={{ marginTop: 0 }}>No commentary exists for this snapshot yet.</p>
-          <button onClick={onGenerate} style={{ padding: "10px 12px" }}>
-            Generate commentary
+          <button className="btn" onClick={onGenerate} disabled={loading}>
+            {loading ? "Generating..." : "Generate commentary"}
           </button>
         </div>
       )}

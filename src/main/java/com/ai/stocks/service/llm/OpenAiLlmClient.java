@@ -40,11 +40,46 @@ public class OpenAiLlmClient implements LlmClient {
             String instructions = PromptTemplates.instructions();
             String userInput = PromptTemplates.userInputJson(om, input);
 
-            Map<String, Object> payload = Map.of(
-                    "model", model,
-                    "instructions", instructions,
-                    "input", userInput
+            // JSON schema that matches CommentarySections
+            Map<String, Object> schema = Map.of(
+                    "type", "object",
+                    "additionalProperties", false,
+                    "required", java.util.List.of(
+                            "summary",
+                            "concentrationAndStructure",
+                            "sectorExposure",
+                            "geoAndCurrency",
+                            "contextualNote",
+                            "disclaimer"
+                    ),
+                    "properties", Map.of(
+                            "summary", Map.of("type", "string"),
+                            "concentrationAndStructure", Map.of("type", "string"),
+                            "sectorExposure", Map.of("type", "string"),
+                            "geoAndCurrency", Map.of("type", "string"),
+                            "contextualNote", Map.of("type", "string"),
+                            "disclaimer", Map.of("type", "string")
+                    )
             );
+
+            Map<String, Object> payload = new java.util.HashMap<>();
+            payload.put("model", model);
+            payload.put("instructions", instructions);
+            payload.put("input", userInput);
+
+            // ✅ New location for structured output settings in Responses API
+            payload.put("text", Map.of(
+                    "format", Map.of(
+                            "type", "json_schema",
+                            "name", "commentary_sections",
+                            "schema", schema,
+                            "strict", true
+                    )
+            ));
+
+            // Deterministic output helps a lot
+            payload.put("temperature", 0);
+            payload.put("max_output_tokens", 700);
 
             @SuppressWarnings("unchecked")
             Map<String, Object> resp = restClient.post()
@@ -53,11 +88,9 @@ public class OpenAiLlmClient implements LlmClient {
                     .retrieve()
                     .body(Map.class);
 
-            // Extract output_text from Responses API
-            // We keep it simple: most responses include output[0].content[0].text
             String text = JsonPathLite.extractFirstOutputText(resp);
-
             return new LlmResult(model, PROMPT_VERSION, text);
+
         } catch (Exception e) {
             throw new IllegalStateException("LLM call failed: " + e.getMessage(), e);
         }

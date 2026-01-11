@@ -1,3 +1,4 @@
+import Page from "../components/Page";
 import { useNavigate } from "react-router-dom";
 import UploadForm from "../components/UploadForm";
 import type { Snapshot } from "../types/Snapshot";
@@ -10,11 +11,12 @@ export default function UploadPage() {
   }
 
   return (
-    <div style={{ padding: 24 }}>
-      <h1>Portfolio Commentary</h1>
-      <p>Upload a CSV to create a snapshot.</p>
-
-      <UploadForm onImported={onImported} />
-    </div>
+    <Page>
+      <div className="card">
+        <h1 style={{ marginTop: 0 }}>Portfolio Commentary</h1>
+        <p className="muted">Upload a CSV to create a snapshot.</p>
+        <UploadForm onImported={onImported} />
+      </div>
+    </Page>
   );
 }
