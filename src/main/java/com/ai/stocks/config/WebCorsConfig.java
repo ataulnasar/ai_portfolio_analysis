@@ -14,8 +14,8 @@ public class WebCorsConfig {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-        "http://localhost:5173",
-                "https://ai-portfolio-analysis-ui.onrender.com"
+                .allowedOrigins("http://localhost:5173",
+                "https://ai-portfolio-analysis-ui.onrender.com")
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*");
       }
