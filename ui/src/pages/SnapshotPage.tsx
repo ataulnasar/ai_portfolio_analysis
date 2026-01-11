@@ -5,6 +5,7 @@ import type { Snapshot } from "../types/Snapshot";
 import SnapshotHeader from "../components/SnapshotHeader";
 import StatsCards from "../components/StatsCards";
 import HoldingsTable from "../components/HoldingsTable";
+import CommentaryPanel from "../components/CommentaryPanel";
 
 export default function SnapshotPage() {
   const { id } = useParams();
@@ -46,6 +47,8 @@ export default function SnapshotPage() {
             <h2 style={{ margin: "6px 0 0 0" }}>Holdings</h2>
             <HoldingsTable snapshot={snapshot} />
           </div>
+
+          <CommentaryPanel snapshotId={snapshot.id} />
         </>
       )}
     </div>
