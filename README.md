@@ -25,6 +25,20 @@ The project is designed as a **portfolio-ready demo** for:
 
 ---
 
+## 👨‍💻 For Clients
+
+This project demonstrates how I design and build production-ready backend systems with:
+
+- Clean architecture
+- Secure authentication
+- Scalable APIs
+- Dockerized deployment
+- Database migrations
+
+I can build similar systems tailored to your product needs.
+
+---
+
 ## Key Features
 
 ### Portfolio Import & Analytics
