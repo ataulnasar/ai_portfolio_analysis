@@ -89,7 +89,7 @@ PostgreSQL (Flyway migrations)
 |
 OpenAI Responses API
 
-## This is how the UI look like
+## These are the Application Screenshots
 <img width="1120" height="302" alt="image" src="https://github.com/user-attachments/assets/7cd470a0-de47-4b8f-888c-e1ae3abddd8d" />
 
 <img width="1101" height="1147" alt="image" src="https://github.com/user-attachments/assets/72d9c5bf-5bd1-450b-be73-d0916b260238" />
